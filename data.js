@@ -82,7 +82,7 @@ const PROFILE = {
       pipeline: ["documents", "chunk + embed", "FAISS", "LangChain", "LLM"],
       metrics: [["relevance", "+30%"], ["retrieval", "FAISS"], ["deploy", "Lambda"]],
       tags: ["LangChain", "FAISS", "Flask", "AWS"],
-      github: "https://github.com/karankatore01",
+      github: "https://github.com/karankatore01/Rag-Based-ChatBot",
     },
     {
       id: "model_03",
@@ -92,7 +92,7 @@ const PROFILE = {
       pipeline: ["feedback", "NLP features", "SVM / RF", "dashboard"],
       metrics: [["samples", "50k+"], ["accuracy", "+25%"], ["models", "SVM · RF"]],
       tags: ["scikit-learn", "Flask", "JavaScript"],
-      github: "https://github.com/karankatore01",
+      github: "https://github.com/karankatore01/Detecting_deceptive_feedback_using-_AI",
     },
     {
       id: "model_04",
@@ -102,7 +102,7 @@ const PROFILE = {
       pipeline: ["image", "preprocess", "VGG-16", "Flask app"],
       metrics: [["gender acc", "90%"], ["age acc", "85%"], ["backbone", "VGG-16"]],
       tags: ["TensorFlow", "Keras", "Flask"],
-      github: "https://github.com/karankatore01",
+      github: "https://github.com/karankatore01/Age-and-Gender-detection",
     },
   ],
 
