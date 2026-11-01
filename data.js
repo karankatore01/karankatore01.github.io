@@ -67,13 +67,13 @@ const PROFILE = {
   projects: [
     {
       id: "model_01",
-      title: "Retail Video Analytics",
-      cat: "cv",
-      desc: "Production computer vision at NymbleUp: detecting and tracking people across multi-camera store CCTV, telling staff apart from customers, and turning live feeds into store analytics — optimized to run on edge GPUs.",
-      pipeline: ["CCTV feeds", "detection", "tracking", "staff / customer", "analytics"],
-      metrics: [["input", "live CCTV"], ["target", "edge GPU"], ["output", "KPIs"]],
-      tags: ["PyTorch", "OpenCV", "Python"],
-      internal: "internal · NymbleUp",
+      title: "MBTI Personality Prediction",
+      cat: "ml",
+      desc: "Tell me how you write — I'll tell you who you are. An NLP model reads a person's text and predicts which of the 16 MBTI personality types they are, served through a Flask web app.",
+      pipeline: ["your text", "NLP features", "classifier", "16 MBTI types", "Flask app"],
+      metrics: [["classes", "16 types"], ["input", "free text"], ["app", "Flask"]],
+      tags: ["NLP", "scikit-learn", "Flask"],
+      github: "https://github.com/karankatore01/MBTI-Personality-Prediction",
     },
     {
       id: "model_02",
