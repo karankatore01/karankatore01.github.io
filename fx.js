@@ -138,7 +138,8 @@
   })();
   document.addEventListener("pointerover", (e) => {
     const t = e.target;
-    const txt = t.closest(".model-card") ? "view" : t.closest("#lab-plot") ? "click" : t.closest("#embed .node") ? "skill" : "";
+    const card = t.closest(".model-card");
+    const txt = card ? (card.classList.contains("linked") ? "open" : "") : t.closest("#lab-plot") ? "click" : t.closest("#embed .node") ? "skill" : "";
     label.textContent = txt;
     ring.classList.toggle("labeled", !!txt);
     ring.classList.toggle("hover", !txt && !!t.closest("a, button, label, .chip, .legend-item"));

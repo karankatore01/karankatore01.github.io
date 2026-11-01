@@ -73,6 +73,7 @@ const PROFILE = {
       pipeline: ["CCTV feeds", "detection", "tracking", "staff / customer", "analytics"],
       metrics: [["input", "live CCTV"], ["target", "edge GPU"], ["output", "KPIs"]],
       tags: ["PyTorch", "OpenCV", "Python"],
+      internal: "internal · NymbleUp",
     },
     {
       id: "model_02",

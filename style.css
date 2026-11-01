@@ -336,6 +336,9 @@ kbd {
 .mc-links { display: flex; gap: 14px; font-family: var(--mono); font-size: 0.78rem; }
 .mc-links a { color: var(--muted); transition: color .15s; }
 .mc-links a:hover { color: var(--c); }
+.model-card.linked { cursor: pointer; }
+.model-card.linked:focus-visible { outline: 2px solid var(--c); outline-offset: 3px; }
+.mc-internal { color: var(--dim); font-size: 0.72rem; border: 1px dashed var(--border-2); border-radius: 99px; padding: 1px 9px; }
 
 /* ── NEURAL PLAYGROUND ─────────────────────── */
 .lab { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 18px; align-items: start; }

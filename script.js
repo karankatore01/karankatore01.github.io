@@ -117,8 +117,21 @@ function renderModels() {
         h("div", { class: "tags" }, p.tags.map((t) => h("span", { text: t }))),
         h("div", { class: "mc-links" },
           p.github ? h("a", { href: p.github, target: "_blank", rel: "noopener", text: "code ↗" }) : null,
-          p.demo ? h("a", { href: p.demo, target: "_blank", rel: "noopener", text: "demo ↗" }) : null)),
+          p.demo ? h("a", { href: p.demo, target: "_blank", rel: "noopener", text: "demo ↗" }) : null,
+          !p.github && !p.demo ? h("span", { class: "mc-internal", text: p.internal || "internal project" }) : null)),
     );
+    // The whole card opens the project; inner links keep their own behaviour.
+    const href = p.github || p.demo;
+    if (href) {
+      card.classList.add("linked");
+      card.dataset.href = href;
+      card.tabIndex = 0;
+      card.setAttribute("role", "link");
+      card.setAttribute("aria-label", `${p.title} — open on GitHub`);
+      const go = () => window.open(href, "_blank", "noopener");
+      card.addEventListener("click", (e) => { if (!e.target.closest("a")) go(); });
+      card.addEventListener("keydown", (e) => { if (e.key === "Enter") go(); });
+    }
     card.addEventListener("pointermove", (e) => {
       const r = card.getBoundingClientRect();
       card.style.setProperty("--mx", `${e.clientX - r.left}px`);
