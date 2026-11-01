@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio</title>
+  <meta name="description" content="AI engineer portfolio — computer vision, LLM systems and production ML.">
+  <meta name="theme-color" content="#07090d">
+  <script>
+    // Skip the boot intro on repeat visits in this tab, and for reduced-motion users
+    try { if (sessionStorage.getItem("booted") || matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("no-boot"); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- BOOT INTRO -->
+  <div id="boot" aria-hidden="true">
+    <p class="boot-logo"><span data-handle></span><span class="accent">.os</span></p>
+    <div id="boot-log"></div>
+    <div class="boot-bar"><i id="boot-bar"></i></div>
+    <p class="boot-skip">press any key to skip</p>
+  </div>
+
+  <canvas id="gl" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a href="#top" class="logo">~/<span class="accent" data-handle></span><span class="cursor">_</span></a>
+    <nav id="nav-links">
+      <a href="#about"><span class="num">01</span>about</a>
+      <a href="#stack"><span class="num">02</span>stack</a>
+      <a href="#models"><span class="num">03</span>models</a>
+      <a href="#lab"><span class="num">04</span>playground</a>
+      <a href="#log"><span class="num">05</span>log</a>
+      <a href="#contact"><span class="num">06</span>contact</a>
+    </nav>
+    <div class="nav-right">
+      <button class="kbd-btn" id="open-palette" aria-label="Open command palette"><kbd>Ctrl</kbd><kbd>K</kbd></button>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="hero-inner">
+        <div class="hero-left">
+          <p class="eyebrow"><span class="pulse-dot"></span><span id="status-text"></span></p>
+          <h1 class="name" data-name></h1>
+          <p class="role"><span class="dim">&gt;</span> <span id="typed"></span><span class="cursor">▋</span></p>
+          <p class="tagline" id="tagline"></p>
+          <div class="cta">
+            <a href="#models" class="btn">view models</a>
+            <a href="#lab" class="btn btn-ghost">train a model live ↗</a>
+          </div>
+          <div class="stats" id="stats"></div>
+        </div>
+
+        <div class="hero-right">
+          <div class="term" id="agent">
+            <div class="term-bar">
+              <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+              <span class="term-title">ask_me — agent v0.1</span>
+              <span class="term-live"><span class="pulse-dot sm"></span>online</span>
+            </div>
+            <div class="term-out" id="term-out" aria-live="polite"></div>
+            <div class="term-chips" id="term-chips"></div>
+            <form class="term-in" id="term-form" autocomplete="off">
+              <span class="prompt">❯</span>
+              <input id="term-input" type="text" placeholder="ask anything… try 'what have you built?'" aria-label="Ask the portfolio agent" spellcheck="false">
+              <button type="submit" class="send" aria-label="Send">↵</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <a href="#about" class="scroll-hint" aria-label="Scroll down"><span></span></a>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="mq-row"><div class="mq-track" id="mq1"></div></div>
+      <div class="mq-row rev"><div class="mq-track" id="mq2"></div></div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about" class="section" data-index="01">
+      <h2 class="section-title reveal"><span class="num">01.</span><span class="scr">about</span></h2>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <div class="avatar">
+            <!-- Replace with: <img src="me.jpg" alt="Your Name"> -->
+            <span data-initials></span>
+          </div>
+          <div id="about-paras"></div>
+        </div>
+        <div class="code-card reveal">
+          <div class="term-bar">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            <span class="term-title">model.config.json</span>
+          </div>
+          <div id="config-json"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STACK / EMBEDDING -->
+    <section id="stack" class="section" data-index="02">
+      <h2 class="section-title reveal"><span class="num">02.</span><span class="scr">stack</span> <span class="title-note">// as an embedding space</span></h2>
+      <p class="section-sub reveal">Skills projected into 2D — related tools cluster together. Hover a node or legend to isolate a cluster.</p>
+      <div class="embed-card reveal">
+        <div class="embed-legend" id="embed-legend"></div>
+        <svg id="embed" viewBox="0 0 800 460" role="img" aria-label="Skills clustered by category"></svg>
+      </div>
+      <div class="stack-list" id="stack-list"></div>
+    </section>
+
+    <!-- MODELS / PROJECTS -->
+    <section id="models" class="section" data-index="03">
+      <h2 class="section-title reveal"><span class="num">03.</span><span class="scr">models</span> <span class="title-note">// shipped projects</span></h2>
+      <div class="filters reveal" id="filters"></div>
+      <div class="models-grid" id="models-grid"></div>
+    </section>
+
+    <!-- NEURAL PLAYGROUND -->
+    <section id="lab" class="section" data-index="04">
+      <h2 class="section-title reveal"><span class="num">04.</span><span class="scr">neural_playground</span> <span class="title-note">// watch a model learn</span></h2>
+      <p class="section-sub reveal">A real neural network written from scratch in plain JavaScript — forward pass, backprop and gradient descent, <span class="accent">no ML libraries</span>. Pick a dataset, change the architecture, click to add points, and watch it learn the decision boundary live.</p>
+      <div class="lab reveal">
+        <div class="lab-left">
+          <div class="lab-plot-wrap">
+            <canvas id="lab-plot" aria-label="Decision boundary plot"></canvas>
+            <span class="lab-hint">click <i class="c0"></i> · shift-click <i class="c1"></i></span>
+          </div>
+          <dl class="lab-stats">
+            <div><dt>epoch</dt><dd id="lab-epoch">0</dd></div>
+            <div><dt>loss</dt><dd id="lab-loss">—</dd></div>
+            <div><dt>accuracy</dt><dd id="lab-acc">—</dd></div>
+          </dl>
+          <canvas id="lab-spark" aria-hidden="true"></canvas>
+        </div>
+        <div class="lab-right">
+          <div class="lab-net-card">
+            <div class="term-bar">
+              <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+              <span class="term-title">network.forward() — what every neuron sees</span>
+            </div>
+            <canvas id="lab-net" aria-label="Network diagram"></canvas>
+          </div>
+          <div class="lab-controls">
+            <div class="ctl">
+              <span class="ctl-label">dataset</span>
+              <div class="seg" id="lab-data">
+                <button data-v="spiral" class="on">spiral</button><button data-v="circles">circles</button><button data-v="xor">xor</button><button data-v="gaussian">gaussian</button>
+              </div>
+            </div>
+            <div class="ctl">
+              <span class="ctl-label">hidden layers</span>
+              <div class="seg" id="lab-arch">
+                <button data-v="4">4</button><button data-v="8,8" class="on">8 · 8</button><button data-v="16,16,8">16 · 16 · 8</button>
+              </div>
+            </div>
+            <div class="ctl">
+              <span class="ctl-label">learning rate <b id="lab-lr-v"></b></span>
+              <input type="range" id="lab-lr" min="0" max="100" value="58" aria-label="Learning rate">
+            </div>
+            <div class="ctl-btns">
+              <button class="btn" id="lab-play">⏸ pause</button>
+              <button class="btn btn-ghost" id="lab-reset">↺ reset weights</button>
+              <button class="btn btn-ghost" id="lab-shuffle">⟳ new data</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE / TRAINING LOG -->
+    <section id="log" class="section" data-index="05">
+      <h2 class="section-title reveal"><span class="num">05.</span><span class="scr">training_log</span> <span class="title-note">// experience</span></h2>
+      <div class="log-card reveal">
+        <div class="term-bar">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="term-title">career.train() — loss over time</span>
+        </div>
+        <svg id="loss-curve" viewBox="0 0 600 150" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <div class="train-log" id="train-log"></div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact">
+      <p class="eyebrow reveal"><span class="num">06.</span>contact</p>
+      <h2 class="contact-title reveal">Let's build something <span class="grad scr">intelligent.</span></h2>
+      <p class="section-sub reveal">Open to AI engineering roles, research collaborations and interesting problems. Inbox is always open.</p>
+      <div class="email-row reveal">
+        <a class="btn btn-lg" data-mailto>say_hello()</a>
+        <button class="btn btn-ghost btn-lg" id="copy-email">copy email</button>
+      </div>
+      <div class="socials reveal" id="socials"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>designed &amp; built by <span class="accent" data-name></span> · vanilla JS + WebGL, no frameworks</p>
+  </footer>
+
+  <!-- STATUS BAR -->
+  <div class="statusbar" role="contentinfo">
+    <span class="sb-seg sb-accent"><span class="pulse-dot sm dark"></span><span id="sb-status"></span></span>
+    <span class="sb-seg sb-hide">⎇ main</span>
+    <span class="sb-seg sb-hide">python 3.12</span>
+    <span class="sb-seg sb-hide">cuda ✓</span>
+    <span class="sb-seg sb-hide" id="sb-fps"></span>
+    <span class="sb-spacer"></span>
+    <span class="sb-seg" id="sb-clock"></span>
+    <button class="sb-seg sb-btn" id="sb-palette">Ctrl+K commands</button>
+  </div>
+
+  <!-- COMMAND PALETTE -->
+  <div class="palette" id="palette" hidden>
+    <div class="pal-box" role="dialog" aria-label="Command palette">
+      <input id="pal-input" type="text" placeholder="type a command…" spellcheck="false" autocomplete="off">
+      <ul id="pal-list" role="listbox"></ul>
+      <div class="pal-foot"><span><kbd>↑</kbd><kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> run</span><span><kbd>esc</kbd> close</span></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+  <script src="fx.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="gl.js"></script>
+  <script src="lab.js"></script>
+</body>
+</html>
